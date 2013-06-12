@@ -1,0 +1,109 @@
+$coordinates-created: ();
+
+@mixin coordinates($opts...) {
+  $method: nth($opts, 1);
+
+  $coordinates-prefix: '.';
+  $coordinates-debug: false !default;
+
+  @if ($coordinates-debug) {
+    $coordinates-prefix: '%';
+  }
+
+  $coordinates-type: fluid !default;
+  $coordinates-unit: "%" !default;
+  $coordinates-dir: mobile-first !default;
+  $coordinates-box-model: border-box !default;
+
+  $coordinates-column-width: 60 !default;
+  $coordinates-gutter-width: 20 !default;
+  $coordinates-offset-width: 40 !default;
+
+  $grid-splitting: 10 !default;
+
+  @if $method == create {
+    $cols: nth($opts, 2);
+
+    $type: $coordinates-type;
+
+    @if (length($opts) > 2) {
+      $type: nth($opts, 3);
+    }
+
+    $coordinates-created: append($coordinates-created, $cols, comma);
+
+    @media screen and (min-width: $cols * 60px) {
+      $methods: span width, pre margin-left, suf margin-right, push left, pull right;
+
+      @each $method in $methods {
+        @for $i from 1 through $cols {
+          #{$coordinates-prefix}#{nth($method, 1)}-#{$i}-#{$cols} {
+            #{nth($method, 2)}: $i / $cols * 100%;
+          }
+        }
+      }
+
+      @for $split from 2 through $grid-splitting {
+        @for $i from 1 through $split {
+          #{$coordinates-prefix}split-#{$i}-#{$split} { width: $i / $split * 100% }
+        }
+      }
+
+      @content;
+    }
+  }
+
+  @else {
+    $size: nth($opts, 2);
+    $min: nth($opts, 3);
+    $max: nth($opts, 4);
+
+    @if $min == min {
+      $min: nth($coordinates-created, 1);
+    }
+
+    @if $max == max {
+      $max: nth($coordinates-created, length($coordinates-created));
+    }
+
+    @for $i from $min through $max {
+      $s: $size;
+
+      @if ($s > 0 and $s < 1) {
+        $s: $i * $s;
+      }
+
+      @if ($s > -1 and $s < 0) {
+        $s: $s + $i * $s;
+      }
+
+      @if ($s < -1) {
+        $s: $i + $s;
+      }
+
+      $s: round($s);
+
+      @if (index($coordinates-created, $i)) {
+        @extend %#{$method}-#{$s}-#{$i};
+      }
+    }
+  }
+}
+
+@include coordinates(create, 4);
+@include coordinates(create, 6);
+@include coordinates(create, 8);
+@include coordinates(create, 12);
+@include coordinates(create, 16);
+@include coordinates(create, 20);
+@include coordinates(create, 24);
+
+selector1 {
+  @include coordinates(span, -1/4, min, max);
+  @include coordinates(pre, 1/8, min, max);
+  @include coordinates(suf, 1/8, min, max);
+}
+
+selector2 {
+  @include coordinates(span, 1/4, min, max);
+}
