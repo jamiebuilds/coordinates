@@ -1,0 +1,19 @@
+@import "../coordinates";
+
+@include coordinates(create, 4);
+@include coordinates(create, 6);
+@include coordinates(create, 8);
+@include coordinates(create, 12);
+@include coordinates(create, 16);
+@include coordinates(create, 20);
+@include coordinates(create, 24);
+
+selector1 {
+  @include coordinates(span, -1/4, min, max);
+  @include coordinates(pre, 1/8, min, max);
+  @include coordinates(suf, 1/8, min, max);
+}
+
+selector2 {
+  @include coordinates(span, 1/4, min, max);
+}
