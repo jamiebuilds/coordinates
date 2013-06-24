@@ -1,5 +1,7 @@
 @import "../coordinates";
 
+//$coordinates-debug: true;
+
 @include coordinates(create, 4);
 @include coordinates(create, 6);
 @include coordinates(create, 8);
@@ -8,12 +10,18 @@
 @include coordinates(create, 20);
 @include coordinates(create, 24);
 
-selector1 {
-  @include coordinates(span, -1/4, min, max);
-  @include coordinates(pre, 1/8, min, max);
-  @include coordinates(suf, 1/8, min, max);
-}
+.match-test-1 { @include coordinates(span,    1, min, max) }
+.match-test-2 { @include coordinates(span,   -1, min, max) }
+.match-test-3 { @include coordinates(span,  1/4, min, max) }
+.match-test-4 { @include coordinates(span, -1/4, min, max) }
 
-selector2 {
-  @include coordinates(span, 1/4, min, max);
-}
+.range-test-1 { @include coordinates(span, 1, min, 8) }
+.range-test-2 { @include coordinates(span, 1, 8, max) }
+.range-test-3 { @include coordinates(span, 1, 8,  16) }
+
+.span-test    { @include coordinates(span,  1/5, min, max) }
+.pre-test     { @include coordinates(pre,   1/5, min, max) }
+.suf-test     { @include coordinates(suf,   1/5, min, max) }
+.push-test    { @include coordinates(push,  1/5, min, max) }
+.pull-test    { @include coordinates(pull,  1/5, min, max) }
+.split-test   { @include coordinates(split,   5, min, max) }
