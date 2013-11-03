@@ -1,0 +1,15 @@
+{
+  "name": "coordinates",
+  "version": "0.0.1",
+  "homepage": "http://github.com/tctcl/coordinates",
+  "main": "dist/",
+  "ignore": [
+    "test",
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    ".jshintrc",
+    ".travis.yml",
+    "Gruntfile.coffee"
+  ]
+}
