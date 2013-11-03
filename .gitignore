@@ -1,6 +1,5 @@
 # SASS
 .sass-cache
-.css
 
 # SublimeText
 /*.sublime-project
@@ -12,3 +11,10 @@ sftp-config*.json
 ._*
 .Spotlight-V100
 .Trashes
+
+# Node
+node_modules
+npm-debug.log
+
+# Test Files
+test/results.css
